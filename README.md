@@ -17,5 +17,5 @@ This project analyzes the spread of COVID-19 in West European countries (Germany
 
 ## Visualization using a Choropleth map
 
-The project includes a Choropleth map that visually represents the COVID-19 situation in West European countries. The map is created using Plotly and Folium libraries, offering an interactive and informative view of the pandemic's impact.
+The project includes a Choropleth map (`fgb-countries-covid-map.html`) that visually represents the COVID-19 situation in West European countries. The map is created using Folium libraries, offering an interactive and informative view of the pandemic's impact (`location`, `total_cases`, `total_deaths`, `people_fully_vaccinated_per_hundred`, `population`).
 
