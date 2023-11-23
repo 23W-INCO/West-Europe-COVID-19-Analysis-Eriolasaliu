@@ -23,6 +23,10 @@ By using this project, users can get the following goals:
 The output map have been made by using the Folium library. COVID-19 metrics are dynamically represented on the map, and users can go over the countries to see more details. This graphic image improves the user experience and makes it easier to fully understand the spatial dynamics of the epidemic.
 Analyzes data using a Choropleth map to identify patterns and draw well-informed conclusions about how COVID-19 is affecting Western Europe.
 
+## Setup Instructions:
+- Clone the repository to your local machine.
+- Install the required libraries by running `pip install folium`.
+- Run the Jupyter notebook to execute the analysis and generate the interactive map (or you can run the main.py script and it will do the same job).
 
 ![Choropleth Map](map-output.png)
 
