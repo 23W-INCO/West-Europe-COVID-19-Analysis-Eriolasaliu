@@ -4,12 +4,12 @@ The main objective of this project and its output is to examine the correlation 
 
 
 
-## Key User Groups:
-Several user groups can use the result of this project:
-- **General Audience:** People who want to learn more about the complex relationship between the regional distribution of COVID-19 cases and death rates.
-- **Data Analysts:** research and analyze COVID-19 metrics in-depth in three countries of West European nations.
-- **Public health and epidemiology researchers:** They can use the data to establish relationships between vaccination rates and pandemic severity.
+## Key User Group: 
+### Public Health Officials and Policymakers.
+Public health officials and policymakers aim to assess and comprehend the impact of COVID-19 on specific regions, particularly in West European countries like Belgium, France, and Germany. Their primary goal is to make data-driven decisions to effectively manage and mitigate the spread of the virus within their jurisdictions.
 
+- #### Which decision do they have to make?
+  These professionals need to make critical decisions related to public health interventions, resource allocation, and policy formulation. They must decide on the deployment of healthcare resources, vaccination strategies, and the implementation of targeted measures based on the severity and distribution of COVID-19 cases. The information derived from the analysis helps them make informed choices to safeguard public health and well-being.
 
 ## User Objectives:
 By using this project, users can get the following goals:
