@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>COVID-19 Dashboard</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .bar {
+            fill: steelblue;
+        }
+
+        .axis-label {
+            font-size: 12px;
+        }
+
+        #loading-message {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        Filter by Country:
+        <select id="countryFilter">
+            <option value="All">All</option>
+            <!-- Options will be populated by JavaScript -->
+        </select>
+    </div>
+    <div id="covid-chart"></div>
+    <div id="loading-message">Loading Chart...</div>
+
+    <script>
+        d3.json("/data").then(function (allData) {
+            let countries = [...new Set(allData.map(d => d.country))];
+            d3.select("#countryFilter")
+                .selectAll('option.country')
+                .data(countries).enter()
+                .append('option')
+                .classed('country', true)
+                .text(d => d);
+
+            function debounce(func, timeout = 300) {
+                let timer;
+                return (...args) => {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        func.apply(this, args);
+                    }, timeout);
+                };
+            }
+
+            function updateChart(country) {
+                if (country === "All") {
+                    // Show loading message
+                    d3.select("#loading-message").style("display", "block");
+                }
+
+                let filteredData = country === "All" ? allData : allData.filter(d => d.country === country);
+                debounceRenderChart(filteredData);
+            }
+
+            // Wrapped the renderBarChart call in a debounce function
+            const debounceRenderChart = debounce(renderBarChart);
+
+            d3.select("#countryFilter").on("change", function () {
+                updateChart(this.value);
+            });
+
+            function renderBarChart(data) {
+                const margin = {
+                        top: 30,
+                        right: 30,
+                        bottom: 100,
+                        left: 70
+                    }, // Increased bottom margin
+                    width = 960 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+                d3.select("#covid-chart").selectAll("*").remove();
+
+                const svg = d3.select("#covid-chart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const x = d3.scaleBand()
+                    .range([0, width])
+                    .domain(data.map(d => d.country))
+                    .padding(0.1); // Adjusted padding
+                svg.append("g")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x))
+                    .selectAll("text")
+                    .attr("class", "axis-label")
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)"); // Rotate labels
+
+                const y = d3.scaleLinear()
+                    .domain([0, d3.max(data, d => d.deaths)])
+                    .range([height, 0]);
+                svg.append("g")
+                    .call(d3.axisLeft(y).tickFormat(d3.format("~s"))); // Format ticks
+
+                // X axis label
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("x", width)
+                    .attr("y", height + margin.top + 40)
+                    .text("Country");
+
+                // Y axis label
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", -margin.left + 20)
+                    .attr("x", -margin.top)
+                    .text("Deaths");
+
+                svg.selectAll(".bar")
+                    .data(data)
+                    .join("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.country))
+                    .attr("width", x.bandwidth())
+                    .attr("y", d => y(d.deaths))
+                    .attr("height", d => height - y(d.deaths));
+
+                // Remove loading message when the chart is rendered
+                d3.select("#loading-message").style("display", "none");
+            }
+
+            updateChart("All");
+
+            d3.select("#countryFilter").on("change", function () {
+                updateChart(this.value);
+            });
+        }).catch(function (error) {
+            console.log(error);
+        });
+    </script>
+</body>
+
+</html>

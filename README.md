@@ -1,32 +1,112 @@
-## Description:
-The goal of this project is to provide an analysis of how the Covid-19 pandemic affected West European nations (Including Belgium, France, and Germany). By using the geographic data and COVID-19 data from WHO, this project is providing a good understanding of the virus's spreads and how it relates to the healthcare indicators.
-The main objective of this project and its output is to examine the correlation between total cases, population and death rates, providing insight into how well these regions' healthcare systems are performing in the face of the future pandemic.
 
+# COVID-19 Dashboard
 
+## Overview
+The COVID-19 Dashboard is a powerful data filtering tool designed to visualize COVID-19 deaths for various European countries. Its primary goal is to provide insights into the impact of the pandemic on different regions and countries. Users, including data analysts, healthcare professionals, and policymakers, can interact with the dashboard to view the data and explore specific regions in detail.
 
-## Key User Group: 
-### Public Health Officials and Policymakers.
-Public health officials and policymakers aim to assess and comprehend the impact of COVID-19 on specific regions, particularly in West European countries like Belgium, France, and Germany. Their primary goal is to make data-driven decisions to effectively manage and mitigate the spread of the virus within their jurisdictions.
+## Key Features
+- **Interactive Map**: Displays a bar chart of European countries versus COVID deaths upon opening the dashboard.
+- **Search Functionality**: Allows users to search for specific regions or countries and view detailed visualizations.
+- **Data Visualization**: Provides clear visualizations that include the number of COVID-19 cases and deaths.
+- **Dockerization**: Ensures easy deployment and environment consistency.
+- **GitHub Codespaces Compatibility**: Supports development and deployment directly via GitHub.
+- **RESTful API Integration**: Supports both POST and GET methods for efficient data handling.
+- **FHIR Data Format**: Utilizes FHIR bundle format for medical data representation.
 
-- #### Which decision do they have to make?
-  These professionals need to make critical decisions related to public health interventions, resource allocation, and policy formulation. They must decide on the deployment of healthcare resources, vaccination strategies, and the implementation of targeted measures based on the severity and distribution of COVID-19 cases. The information derived from the analysis helps them make informed choices to safeguard public health and well-being.
+## Data Source
+The COVID-19 data for this dashboard is generated from a medical JSON dataset, specifically in FHIR bundle format. Here's a sample structure of the data:
 
-## User Objectives:
-By using this project, users can get the following goals:
-- **Examine the COVID-19 Data:** Get and examine comprehensive COVID-19 data for Germany, France, and Belgium, including population statistics, vaccination rates, total cases, and total deaths.
-- **Visualize Geographic map:** To see how COVID-19 has expanded geographically over West European nations.
-- **Awareness of correlations:** Learn more about the relationship between the severity of the pandemic and healthcare measures (such vaccination rates). Planning policies and making educated decisions depend on having this insight.
+```json
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-2463",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "94531-1",
+              "display": "COVID-19 cases"
+            }
+          ]
+        },
+        // More data...
+      }
+    },
+    {
+      // Additional entries...
+    }
+  ]
+}
+```
 
+## Visualization
+The dashboard provides an intuitive visualization of COVID-19 data, including:
+- **Number of Cases**: The visualization includes the number of COVID-19 cases for each region or country.
+- **Number of Deaths**: Users can easily view the number of COVID-19 deaths for specific regions.
 
+## Key User Groups
+The COVID-19 Dashboard caters to the following key user groups:
+- **Data Analysts**: Utilize the dashboard for in-depth analysis of COVID-19 data and trends.
+- **Healthcare Professionals**: Gain insights into the impact of the pandemic in different regions to support clinical decisions.
+- **Policymakers**: Use the data to inform decisions on healthcare policies and strategies.
+- **Researchers**: Researchers in epidemiology and public health can access valuable data for their studies.
 
-## Visualization:
-The output map have been made by using the Folium library. COVID-19 metrics are dynamically represented on the map, and users can go over the countries to see more details. This graphic image improves the user experience and makes it easier to fully understand the spatial dynamics of the epidemic.
-Analyzes data using a Choropleth map to identify patterns and draw well-informed conclusions about how COVID-19 is affecting Western Europe.
+## User Objectives
+Users of the dashboard have specific objectives, including:
+- **Understanding Regional Impact**: Users can view COVID-19 data for different European countries to understand the regional impact of the pandemic.
+- **Comparing Statistics**: Easily compare the number of cases and deaths across regions.
+- **Informed Decision-Making**: Policymakers and healthcare professionals can make informed decisions based on the data.
+- **Research and Analysis**: Researchers can analyze the data for epidemiological studies and research.
 
-## Setup Instructions:
-- Clone the repository to your local machine.
-- Install the required libraries by running `pip install folium`.
-- Run the Jupyter notebook to execute the analysis and generate the interactive map (or you can run the main.py script and it will do the same job).
+## Installation and Setup
+Ensure Docker is installed on your system before proceeding.
 
-![Choropleth Map](map-output.png)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Eriolasaliu/West-Europe-COVID-19-Analysis
+   ```
 
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd West-Europe-COVID-19-Analysis
+   ```
+
+3. **Build the Docker Image**:
+   ```bash
+   docker build -t covid19-dashboard .
+   ```
+
+4. **Run the Docker Container**:
+   ```bash
+   docker run -p 5000:5000 covid19-dashboard
+   ```
+
+## Usage
+1. **Accessing the Dashboard**: Open your web browser and go to `http://localhost:5000`.
+2. **Filter by Country**: Use the dropdown menu to select a specific country or choose "All" to see the overall visualization.
+3. **Interact with Visualizations**: Explore the map and view the number of COVID-19 cases and deaths for the selected region.
+
+## Data Structure
+The FHIR bundle JSON data is transformed into a more usable format for visualization. It includes information such as the country, date, COVID-19 cases, and deaths.
+
+## Contributing
+Interested in contributing? Here's how you can help:
+
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -am 'Add some YourFeature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Create a new Pull Request.
+
+## License
+This project is released under the [MIT License](LICENSE).
+
+## Contact
+- **Name**: [eriola.salihu@stud.th-deg.de](mailto:eriola.salihu@stud.th-deg.de)
+- **Project Link**: [https://github.com/Eriolasaliu/West-Europe-COVID-19-Analysis](https://github.com/Eriolasaliu/West-Europe-COVID-19-Analysis)
